@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoisaPink | Galeria Criativa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #fafafa;
+            --bg-secondary: #ffffff;
+            --bg-card: #f5f5f5;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --accent-pink: #ff00ff;
+            --accent-pink-light: #ff69b4;
+            --accent-pink-dark: #cc00cc;
+            --accent-cyan: #00ffff;
+            --border-color: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --danger: #ff0066;
+            --success: #00ff88;
+            --warning: #ffaa00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Loading Overlay */
+        .global-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .global-loader.active {
+            display: flex;
+        }
+
+        .global-loader-text {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--accent-pink);
+            font-size: 1rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent-pink);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Resto dos estilos anteriores... */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-pink);
+            border-radius: 5px;
+        }
+
+        .glitch {
+            position: relative;
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--accent-pink);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--accent-cyan);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(31px, 9999px, 94px, 0); }
+            20% { clip: rect(78px, 9999px, 23px, 0); }
+            40% { clip: rect(12px, 9999px, 56px, 0); }
+            60% { clip: rect(89px, 9999px, 12px, 0); }
+            80% { clip: rect(45px, 9999px, 67px, 0); }
+            100% { clip: rect(23px, 9999px, 89px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 99px, 0); }
+            20% { clip: rect(12px, 9999px, 45px, 0); }
+            40% { clip: rect(78px, 9999px, 12px, 0); }
+            60% { clip: rect(34px, 9999px, 78px, 0); }
+            80% { clip: rect(56px, 9999px, 23px, 0); }
+            100% { clip: rect(89px, 9999px, 45px, 0); }
+        }
+
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            10% { transform: skew(-1deg); }
+            20% { transform: skew(1deg); }
+            30% { transform: skew(0deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--accent-pink);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px var(--shadow);
+        }
+
+        .logo {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: var(--accent-pink);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 20px var(--accent-pink-light);
+            transform: scale(1.05);
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .admin-badge {
+            background: var(--accent-pink);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: none;
+            animation: pulse 2s infinite;
+        }
+
+        .admin-badge.active {
+            display: block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 2px solid var(--accent-pink);
+            color: var(--accent-pink);
+            padding: 8px 20px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-pink);
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .hero {
+            margin-top: 80px;
+            padding: 100px 50px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 0, 255, 0.03) 10px,
+                rgba(255, 0, 255, 0.03) 20px
+            );
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .controls {
+            padding: 30px 50px;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        .filter-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 10px 25px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+            background: rgba(255, 0, 255, 0.05);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 20px;
+            padding-right: 40px;
+            font-family: 'Space Grotesk', sans-serif;
+            width: 300px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.1);
+        }
+
+        .search-box::after {
+            content: '⌕';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-pink);
+            font-size: 1.2rem;
+        }
+
+        .gallery {
+            padding: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 500px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s forwards;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-pink);
+            box-shadow: 0 20px 40px rgba(255, 0, 255, 0.15);
+        }
+
+        .gallery-item.hidden {
+            display: none;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+        }
+
+        .item-file-icon {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+            font-size: 4rem;
+            color: var(--accent-pink);
+        }
+
+        .file-type-label {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(255,255,255,0.98), transparent);
+            padding: 30px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover .item-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .admin-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: none;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .admin-mode .admin-controls {
+            display: flex;
+        }
+
+        .admin-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .edit-btn {
+            background: var(--accent-cyan);
+            color: white;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+        }
+
+        .admin-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .item-category {
+            display: inline-block;
+            background: var(--accent-pink);
+            color: white;
+            padding: 5px 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+        }
+
+        .item-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .item-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .item-stats {
+            display: flex;
+            gap: 15px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .stat:hover {
+            color: var(--accent-pink);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 2000;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 50px 20px;
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 3px solid var(--accent-pink);
+            border-radius: 20px;
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-pink);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+
+        .modal-media {
+            position: relative;
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-file-preview {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .modal-file-icon {
+            font-size: 6rem;
+            margin-bottom: 20px;
+            color: var(--accent-pink);
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .modal-info {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .modal-category {
+            color: var(--accent-pink);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .modal-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .modal-meta {
+            border-top: 2px solid var(--border-color);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .modal-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 2px solid var(--accent-pink);
+            color: var(--accent-pink);
+            padding: 12px 25px;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-pink);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .action-btn.primary {
+            background: var(--accent-pink);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: var(--accent-pink-dark);
+            border-color: var(--accent-pink-dark);
+        }
+
+        .action-btn.danger {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .action-btn.danger:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .upload-section {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+        }
+
+        .upload-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 0, 255, 0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
+        }
+
+        .upload-panel {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: var(--bg-secondary);
+            border: 3px solid var(--accent-pink);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .upload-panel.active {
+            display: block;
+            animation: slideUp 0.3s;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .upload-panel h3 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            color: var(--accent-pink);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+            border-radius: 8px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 15px;
+            background: var(--bg-card);
+            border: 2px dashed var(--accent-pink);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+        }
+
+        .file-input-label:hover {
+            background: rgba(255, 0, 255, 0.05);
+            border-color: var(--accent-pink-dark);
+        }
+
+        .file-input-label.has-file {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--success);
+            color: var(--text-primary);
+        }
+
+        .file-preview {
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .file-preview.active {
+            display: block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--accent-pink);
+            border: none;
+            color: white;
+            padding: 15px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-pink-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-box {
+            background: var(--bg-secondary);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid var(--accent-pink);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .login-box h2 {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--accent-pink);
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 5px;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: var(--accent-pink-dark);
+        }
+
+        .login-error {
+            color: var(--danger);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent-pink);
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 4000;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            max-width: 350px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-left-color: var(--success);
+        }
+
+        .notification.error {
+            border-left-color: var(--danger);
+        }
+
+        .notification-title {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+
+        .notification-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .confirm-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3500;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirm-dialog.active {
+            display: flex;
+        }
+
+        .confirm-box {
+            background: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid var(--danger);
+            max-width: 400px;
+            text-align: center;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .confirm-box h3 {
+            color: var(--danger);
+            margin-bottom: 15px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .sync-status {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: var(--bg-secondary);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 2px solid var(--accent-pink);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 998;
+        }
+
+        .sync-status.syncing::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--border-color);
+            border-top-color: var(--accent-pink);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 968px) {
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .upload-panel {
+                width: 90vw;
+                right: -30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .gallery {
+                padding: 20px;
+            }
+            
+            .controls {
+                padding: 20px;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Global Loader -->
+    <div class="global-loader" id="globalLoader">
+        <div class="spinner"></div>
+        <div class="global-loader-text">A SINCRONIZAR...</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">ROISAPINK</a>
+        <div class="nav-controls">
+            <span class="admin-badge" id="adminBadge">MODO ADMIN</span>
+            <button class="nav-btn" id="adminLoginBtn" onclick="showLogin()">Login Admin</button>
+            <button class="nav-btn" id="adminLogoutBtn" onclick="logout()" style="display:none;">Sair</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="glitch" data-text="GALERIA CRIATIVA">GALERIA CRIATIVA</h1>
+        <p>Partilha a tua arte! Todos podem contribuir e ver o trabalho da comunidade.</p>
+    </section>
+
+    <!-- Filter Controls -->
+    <div class="controls">
+        <div class="filter-container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Tudo</button>
+                <button class="filter-btn" data-filter="livro">Livros</button>
+                <button class="filter-btn" data-filter="arte">Arte Digital</button>
+                <button class="filter-btn" data-filter="ilustracao">Ilustrações</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Pesquisar projetos...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <section class="gallery" id="galeria">
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Items injected by JS -->
+        </div>
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <div class="empty-state-icon">📭</div>
+            <h3>Nenhum projeto encontrado</h3>
+            <p>Sê o primeiro a partilhar algo!</p>
+        </div>
+    </section>
+
+    <!-- Sync Status -->
+    <div class="sync-status" id="syncStatus" style="display:none;">
+        <span>🟢 Online</span>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-body">
+                <div class="modal-media" id="modalMedia"></div>
+                <div class="modal-info">
+                    <div class="modal-category" id="modalCategory">Categoria</div>
+                    <h2 class="modal-title" id="modalTitle">Título</h2>
+                    <p class="modal-description" id="modalDescription">Descrição...</p>
+                    <div class="modal-meta">
+                        <span class="modal-date" id="modalDate">2024</span>
+                        <div class="modal-actions" id="modalActions"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Panel (Agora disponível para TODOS) -->
+    <div class="upload-section" id="uploadSection">
+        <div class="upload-panel" id="uploadPanel">
+            <h3>📤 PARTILHAR PROJETO</h3>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label>Teu Nome *</label>
+                    <input type="text" id="authorName" required placeholder="Como te chamas?">
+                </div>
+                
+                <div class="form-group">
+                    <label>Título do Projeto *</label>
+                    <input type="text" id="newTitle" required placeholder="Nome da obra">
+                </div>
+                
+                <div class="form-group">
+                    <label>Categoria *</label>
+                    <select id="newCategory" required>
+                        <option value="">Selecionar...</option>
+                        <option value="livro">Livro/Escrita</option>
+                        <option value="arte">Arte Digital</option>
+                        <option value="ilustracao">Ilustração</option>
+                        <option value="design">Design</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Ficheiro *</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="newFile" accept="image/*,.pdf,.doc,.docx,.txt,.epub" required onchange="handleFileSelect(this)">
+                        <label for="newFile" class="file-input-label" id="fileLabel">
+                            📁 Clique para selecionar ficheiro<br>
+                            <small>Imagens, PDF, Word, TXT (Max 5MB)</small>
+                        </label>
+                    </div>
+                    <div class="file-preview" id="filePreview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição *</label>
+                    <textarea id="newDescription" required placeholder="Descreve o teu projeto..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Link externo (opcional)</label>
+                    <input type="url" id="newExternalLink" placeholder="Portfolio, redes sociais...">
+                </div>
+
+                <button type="submit" class="submit-btn">PUBLICAR PARA TODOS</button>
+            </form>
+        </div>
+        <button class="upload-btn" onclick="toggleUpload()" title="Partilhar Projeto">+</button>
+    </div>
+
+    <!-- Login Modal (Apenas para Admin - Editar/Eliminar) -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-box">
+            <h2>🔐 ADMIN ONLY</h2>
+            <p style="margin-bottom:20px;color:#666;font-size:0.9rem;">
+                Login apenas necessário para editar ou eliminar conteúdo.
+            </p>
+            <input type="password" class="login-input" id="adminPassword" placeholder="••••••" maxlength="6">
+            <button class="login-btn" onclick="checkLogin()">ENTRAR</button>
+            <div class="login-error" id="loginError">Palavra-passe incorreta!</div>
+        </div>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div class="confirm-dialog" id="confirmDialog">
+        <div class="confirm-box">
+            <h3>⚠️ CONFIRMAR ELIMINAÇÃO</h3>
+            <p>Tens a certeza que queres eliminar este projeto?<br>Esta ação é permanente.</p>
+            <div class="confirm-buttons">
+                <button class="action-btn" onclick="closeConfirm()">Cancelar</button>
+                <button class="action-btn danger" onclick="confirmDelete()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-title" id="notifTitle">Título</div>
+        <div class="notification-text" id="notifText">Mensagem</div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÃO JSONBIN.IO - CRIA A TUA CONTA GRATUITA EM jsonbin.io
+        // 1. Vai a https://jsonbin.io
+        // 2. Cria uma conta gratuita
+        // 3. Cria um novo Bin
+        // 4. Copia o URL do bin e a chave API
+        // 5. Substitui abaixo:
+        
+        const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/69a95d3ad0ea881f40f148b4';
+        const JSONBIN_KEY = '$2a$10$WiQ2cNYCmz4lr43shFzswuw8gGuCDG2KDkvuKDUVf7RV9M4L1nSxO';
+        
+        // MODO DEMONSTRAÇÃO (sem backend):
+        // Se não configurares o JSONBin, usa o modo demo onde os dados ficam em memória
+        // mas são partilhados entre todos os utilizadores durante a sessão do servidor
+        // (nota: em GitHub Pages puro, usa o localStorage com sincronização manual)
+        
+        const ADMIN_PASSWORD = '159753';
+        let isAdmin = false;
+        let itemToDelete = null;
+        let portfolioItems = [];
+        let isDemoMode = false; // Muda para false quando configurares JSONBin
+
+        // Dados iniciais
+        const initialData = [
+            {
+                id: 1,
+                title: "Entre o Pixels e a Realidade",
+                author: "RoisaPink",
+                category: "livro",
+                fileType: "image",
+                fileName: "cover.jpg",
+                fileData: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=800&q=80",
+                image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=800&q=80",
+                description: "Uma novela cyberpunk que explora a identidade de género num futuro distópico.",
+                date: "2024-01-15",
+                likes: 128,
+                externalLink: null
+            },
+            {
+                id: 2,
+                title: "Glitch Princess",
+                author: "Comunidade",
+                category: "arte",
+                fileType: "image",
+                fileName: "glitch.jpg",
+                fileData: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
+                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
+                description: "Série de ilustrações explorando a estética glitch e feminilidade digital.",
+                date: "2024-02-20",
+                likes: 95,
+                externalLink: null
+            }
+        ];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', async () => {
+            showGlobalLoader('A CARREGAR GALERIA...');
+            
+            // Tentar carregar do JSONBin se configurado
+            if (!isDemoMode) {
+                await loadFromCloud();
+            } else {
+                const saved = localStorage.getItem('roisapink_gallery_demo');
+                portfolioItems = saved ? JSON.parse(saved) : [...initialData];
+            }
+            
+            renderGallery();
+            hideGlobalLoader();
+            
+            // Verificar sessão admin
+            if (sessionStorage.getItem('roisapink_admin') === 'true') {
+                activateAdminMode();
+            }
+
+            // Atualizar status
+            updateSyncStatus();
+        });
+
+        // FUNÇÕES JSONBIN.IO (Cloud)
+        async function loadFromCloud() {
+            try {
+                const response = await fetch(JSONBIN_URL + '/latest', {
+                    headers: { 'X-Master-Key': JSONBIN_KEY }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    portfolioItems = data.record.items || initialData;
+                    isDemoMode = false;
+                } else {
+                    throw new Error('Falha ao carregar');
+                }
+            } catch (error) {
+                console.log('Modo Demo ativado (sem conexão cloud)');
+                portfolioItems = [...initialData];
+                isDemoMode = true;
+            }
+        }
+
+        async function saveToCloud() {
+            if (isDemoMode) {
+                // Em modo demo, guarda no localStorage e mostra aviso
+                localStorage.setItem('roisapink_gallery_demo', JSON.stringify(portfolioItems));
+                showNotification('Modo Demo', 'Dados guardados localmente. Configura JSONBin para partilha real!', 'success');
+                return true;
+            }
+
+            try {
+                showGlobalLoader('A GUARDAR...');
+                const response = await fetch(JSONBIN_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': JSONBIN_KEY
+                    },
+                    body: JSON.stringify({ items: portfolioItems })
+                });
+                hideGlobalLoader();
+                return response.ok;
+            } catch (error) {
+                hideGlobalLoader();
+                showNotification('Erro', 'Não foi possível sincronizar com a cloud.', 'error');
+                return false;
+            }
+        }
+
+        // Sistema de Login Admin
+        function showLogin() {
+            document.getElementById('loginModal').classList.add('active');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPassword').focus();
+        }
+
+        function checkLogin() {
+            const input = document.getElementById('adminPassword').value;
+            if (input === ADMIN_PASSWORD) {
+                sessionStorage.setItem('roisapink_admin', 'true');
+                activateAdminMode();
+                closeLogin();
+                showNotification('Admin', 'Modo administrador activado. Podes editar e eliminar.', 'success');
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+                setTimeout(() => document.getElementById('loginError').style.display = 'none', 3000);
+            }
+        }
+
+        function activateAdminMode() {
+            isAdmin = true;
+            document.body.classList.add('admin-mode');
+            document.getElementById('adminBadge').classList.add('active');
+            document.getElementById('adminLoginBtn').style.display = 'none';
+            document.getElementById('adminLogoutBtn').style.display = 'block';
+            renderGallery();
+        }
+
+        function logout() {
+            isAdmin = false;
+            sessionStorage.removeItem('roisapink_admin');
+            document.body.classList.remove('admin-mode');
+            document.getElementById('adminBadge').classList.remove('active');
+            document.getElementById('adminLoginBtn').style.display = 'block';
+            document.getElementById('adminLogoutBtn').style.display = 'none';
+            renderGallery();
+        }
+
+        function closeLogin() {
+            document.getElementById('loginModal').classList.remove('active');
+        }
+
+        // Render Gallery
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            const emptyState = document.getElementById('emptyState');
+            grid.innerHTML = '';
+
+            if (portfolioItems.length === 0) {
+                emptyState.style.display = 'block';
+                return;
+            } else {
+                emptyState.style.display = 'none';
+            }
+
+            // Ordenar por data (mais recente primeiro)
+            const sortedItems = [...portfolioItems].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            sortedItems.forEach((item, index) => {
+                const card = createCard(item, index);
+                grid.appendChild(card);
+            });
+        }
+
+        function createCard(item, index) {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.dataset.category = item.category;
+            div.dataset.id = item.id;
+            div.style.animationDelay = `${index * 0.1}s`;
+
+            let mediaContent = '';
+            if (item.fileType === 'image') {
+                mediaContent = `<img src="${item.image}" alt="${item.title}" class="item-image" loading="lazy">`;
+            } else {
+                const icon = getFileIcon(item.fileType);
+                mediaContent = `
+                    <div class="item-file-icon">
+                        ${icon}
+                        <span class="file-type-label">${item.fileType.toUpperCase()}</span>
+                    </div>
+                `;
+            }
+
+            div.innerHTML = `
+                ${mediaContent}
+                <div class="admin-controls">
+                    <button class="admin-btn edit-btn" onclick="editItem(${item.id}, event)" title="Editar">✏️</button>
+                    <button class="admin-btn delete-btn" onclick="deleteItem(${item.id}, event)" title="Eliminar">🗑️</button>
+                </div>
+                <div class="item-overlay">
+                    <span class="item-category">${item.category}</span>
+                    <h3 class="item-title">${item.title}</h3>
+                    <p style="font-size:0.85rem;color:#666;margin-bottom:8px;">por ${item.author}</p>
+                    <div class="item-meta">
+                        <span>${formatDate(item.date)}</span>
+                        <div class="item-stats">
+                            <span class="stat" onclick="toggleLike(event, ${item.id})">
+                                ${item.liked ? '♥' : '♡'} ${item.likes}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            div.onclick = (e) => {
+                if (!e.target.closest('.admin-controls') && !e.target.closest('.stat')) {
+                    openModal(item);
+                }
+            };
+
+            return div;
+        }
+
+        function getFileIcon(type) {
+            const icons = {
+                'pdf': '📄', 'doc': '📝', 'docx': '📝', 'txt': '📃',
+                'epub': '📚', 'mobi': '📚', 'default': '📎'
+            };
+            return icons[type] || icons['default'];
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('pt-PT', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        // Modal Functions
+        function openModal(item) {
+            const modal = document.getElementById('modal');
+            const mediaContainer = document.getElementById('modalMedia');
+            
+            if (item.fileType === 'image') {
+                mediaContainer.innerHTML = `<img src="${item.image}" alt="${item.title}" class="modal-image">`;
+            } else {
+                mediaContainer.innerHTML = `
+                    <div class="modal-file-preview">
+                        <div class="modal-file-icon">${getFileIcon(item.fileType)}</div>
+                        <h3>${item.fileName}</h3>
+                        <div class="file-actions">
+                            <a href="${item.fileData}" class="action-btn primary" download="${item.fileName}">
+                                ⬇️ Download
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modalCategory').textContent = item.category;
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalDescription').innerHTML = `
+                <p><strong>Autor:</strong> ${item.author}</p>
+                <p style="margin-top:10px;">${item.description}</p>
+            `;
+            document.getElementById('modalDate').textContent = formatDate(item.date);
+
+            const actions = document.getElementById('modalActions');
+            let buttonsHTML = `
+                <button class="action-btn" onclick="toggleLike(null, ${item.id}); updateModalLike(${item.id})">
+                    <span id="modalLikeIcon">${item.liked ? '♥' : '♡'}</span> 
+                    <span id="modalLikeCount">${item.likes}</span>
+                </button>
+            `;
+            
+            if (item.externalLink) {
+                buttonsHTML += `<a href="${item.externalLink}" target="_blank" class="action-btn primary">Ver Mais →</a>`;
+            }
+
+            if (isAdmin) {
+                buttonsHTML += `
+                    <button class="action-btn" onclick="editItem(${item.id}); closeModal();">✏️ Editar</button>
+                    <button class="action-btn danger" onclick="deleteItem(${item.id}); closeModal();">🗑️ Eliminar</button>
+                `;
+            }
+
+            actions.innerHTML = buttonsHTML;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateModalLike(id) {
+            const item = portfolioItems.find(i => i.id === id);
+            if (item) {
+                document.getElementById('modalLikeIcon').textContent = item.liked ? '♥' : '♡';
+                document.getElementById('modalLikeCount').textContent = item.likes;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Like System (local por utilizador)
+        function toggleLike(event, id) {
+            if (event) event.stopPropagation();
+            
+            // Verificar se já deu like neste dispositivo
+            const likedItems = JSON.parse(localStorage.getItem('roisapink_likes') || '[]');
+            const item = portfolioItems.find(i => i.id === id);
+            
+            if (!item) return;
+
+            if (likedItems.includes(id)) {
+                // Remover like
+                item.likes--;
+                const index = likedItems.indexOf(id);
+                likedItems.splice(index, 1);
+                item.liked = false;
+            } else {
+                // Adicionar like
+                item.likes++;
+                likedItems.push(id);
+                item.liked = true;
+            }
+            
+            localStorage.setItem('roisapink_likes', JSON.stringify(likedItems));
+            
+            // Guardar na cloud (apenas likes são locais, mas atualizamos contagem global)
+            saveToCloud();
+            renderGallery();
+        }
+
+        // Upload Handling
+        let selectedFile = null;
+
+        function handleFileSelect(input) {
+            const file = input.files[0];
+            const label = document.getElementById('fileLabel');
+            const preview = document.getElementById('filePreview');
+            
+            if (file) {
+                // Verificar tamanho (5MB max)
+                if (file.size > 5 * 1024 * 1024) {
+                    showNotification('Erro', 'Ficheiro muito grande! Máximo 5MB.', 'error');
+                    input.value = '';
+                    return;
+                }
+
+                selectedFile = file;
+                label.classList.add('has-file');
+                label.innerHTML = `✅ ${file.name}<br><small>${formatFileSize(file.size)}</small>`;
+                
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        preview.innerHTML = `<img src="${e.target.result}" style="max-width:100%;border-radius:8px;">`;
+                        preview.classList.add('active');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.innerHTML = `📎 ${file.name}`;
+                    preview.classList.add('active');
+                }
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        // Upload Form - AGORA PARA TODOS
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('.submit-btn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'A PUBLICAR...';
+
+            const author = document.getElementById('authorName').value;
+            const title = document.getElementById('newTitle').value;
+            const category = document.getElementById('newCategory').value;
+            const description = document.getElementById('newDescription').value;
+            const externalLink = document.getElementById('newExternalLink').value;
+            
+            let fileData = null;
+            let imageUrl = null;
+            let fileType = 'link';
+            
+            if (selectedFile) {
+                fileType = selectedFile.name.split('.').pop().toLowerCase();
+                
+                if (selectedFile.type.startsWith('image/')) {
+                    fileData = await readFileAsDataURL(selectedFile);
+                    imageUrl = fileData;
+                } else {
+                    // Para não-imagens, guardamos o nome e usamos placeholder
+                    fileData = selectedFile.name; // Em produção, enviarias para um servidor de ficheiros
+                    imageUrl = getPlaceholderImage(category);
+                }
+            }
+
+            const newItem = {
+                id: Date.now(),
+                title,
+                author,
+                category,
+                fileType: selectedFile?.type.startsWith('image/') ? 'image' : fileType,
+                fileName: selectedFile ? selectedFile.name : 'link',
+                fileData: fileData,
+                image: imageUrl || getPlaceholderImage(category),
+                description,
+                date: new Date().toISOString(),
+                likes: 0,
+                liked: false,
+                externalLink: externalLink || null
+            };
+
+            portfolioItems.unshift(newItem);
+            const saved = await saveToCloud();
+            
+            if (saved) {
+                renderGallery();
+                e.target.reset();
+                document.getElementById('fileLabel').classList.remove('has-file');
+                document.getElementById('fileLabel').innerHTML = `📁 Clique para selecionar ficheiro<br><small>Imagens, PDF, Word, TXT (Max 5MB)</small>`;
+                document.getElementById('filePreview').classList.remove('active');
+                selectedFile = null;
+                document.getElementById('uploadPanel').classList.remove('active');
+                showNotification('🎉 Sucesso!', 'O teu projeto foi partilhado com todos!', 'success');
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'PUBLICAR PARA TODOS';
+        });
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function getPlaceholderImage(category) {
+            const placeholders = {
+                'livro': 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=800&q=80',
+                'arte': 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80',
+                'ilustracao': 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80',
+                'design': 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80'
+            };
+            return placeholders[category] || placeholders['arte'];
+        }
+
+        // Delete (Apenas Admin)
+        function deleteItem(id, event) {
+            if (event) event.stopPropagation();
+            if (!isAdmin) {
+                showNotification('Acesso Negado', 'Apenas administradores podem eliminar conteúdo.', 'error');
+                return;
+            }
+            itemToDelete = id;
+            document.getElementById('confirmDialog').classList.add('active');
+        }
+
+        function closeConfirm() {
+            document.getElementById('confirmDialog').classList.remove('active');
+            itemToDelete = null;
+        }
+
+        async function confirmDelete() {
+            if (itemToDelete) {
+                portfolioItems = portfolioItems.filter(i => i.id !== itemToDelete);
+                await saveToCloud();
+                renderGallery();
+                showNotification('Eliminado', 'Projeto removido permanentemente.', 'success');
+            }
+            closeConfirm();
+        }
+
+        // Edit (Apenas Admin)
+        function editItem(id, event) {
+            if (event) event.stopPropagation();
+            if (!isAdmin) {
+                showNotification('Acesso Negado', 'Apenas administradores podem editar.', 'error');
+                return;
+            }
+            
+            const item = portfolioItems.find(i => i.id === id);
+            if (item) {
+                document.getElementById('authorName').value = item.author;
+                document.getElementById('newTitle').value = item.title;
+                document.getElementById('newCategory').value = item.category;
+                document.getElementById('newDescription').value = item.description;
+                document.getElementById('newExternalLink').value = item.externalLink || '';
+                document.getElementById('uploadPanel').classList.add('active');
+                document.getElementById('uploadForm').dataset.editId = id;
+                document.querySelector('.submit-btn').textContent = 'GUARDAR ALTERAÇÕES';
+            }
+        }
+
+        // Filters & Search
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                const items = document.querySelectorAll('.gallery-item');
+                let visibleCount = 0;
+                
+                items.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+                
+                document.getElementById('emptyState').style.display = visibleCount === 0 ? 'block' : 'none';
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const items = document.querySelectorAll('.gallery-item');
+            let visibleCount = 0;
+            
+            items.forEach(item => {
+                const title = item.querySelector('.item-title').textContent.toLowerCase();
+                const category = item.dataset.category.toLowerCase();
+                
+                if (title.includes(term) || category.includes(term)) {
+                    item.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            
+            document.getElementById('emptyState').style.display = visibleCount === 0 ? 'block' : 'none';
+        });
+
+        function toggleUpload() {
+            const panel = document.getElementById('uploadPanel');
+            panel.classList.toggle('active');
+            delete document.getElementById('uploadForm').dataset.editId;
+            document.querySelector('.submit-btn').textContent = 'PUBLICAR PARA TODOS';
+        }
+
+        // UI Helpers
+        function showGlobalLoader(text) {
+            document.getElementById('globalLoader').classList.add('active');
+            if (text) document.querySelector('.global-loader-text').textContent = text;
+        }
+
+        function hideGlobalLoader() {
+            document.getElementById('globalLoader').classList.remove('active');
+        }
+
+        function updateSyncStatus() {
+            const status = document.getElementById('syncStatus');
+            if (isDemoMode) {
+                status.innerHTML = '<span>🟡 Modo Demo (Local)</span>';
+                status.style.display = 'flex';
+            } else {
+                status.innerHTML = '<span>🟢 Cloud Ativo</span>';
+                status.style.display = 'flex';
+            }
+        }
+
+        function showNotification(title, text, type = 'success') {
+            const notif = document.getElementById('notification');
+            document.getElementById('notifTitle').textContent = title;
+            document.getElementById('notifText').textContent = text;
+            notif.className = 'notification show ' + type;
+            setTimeout(() => notif.classList.remove('show'), 4000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                closeLogin();
+                closeConfirm();
+                document.getElementById('uploadPanel').classList.remove('active');
+            }
+        });
+
+        // Fechar modais ao clicar fora
+        document.getElementById('loginModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('loginModal')) closeLogin();
+        });
+        
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal')) closeModal();
+        });
+    </script>
+</body>
+</html>

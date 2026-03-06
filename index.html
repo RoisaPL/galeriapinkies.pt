@@ -7,17 +7,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #fafafa;
-            --bg-secondary: #ffffff;
-            --bg-card: #f5f5f5;
-            --text-primary: #1a1a1a;
-            --text-secondary: #666666;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
             --accent-pink: #ff00ff;
-            --accent-pink-light: #ff00ff;
+            --accent-pink-light: #ff69b4;
             --accent-pink-dark: #cc00cc;
             --accent-cyan: #00ffff;
-            --border-color: #e0e0e0;
-            --shadow: rgba(0, 0, 0, 0.1);
+            --accent-blue: #0080ff;
+            --border-color: #2a2a3e;
+            --shadow: rgba(0, 0, 0, 0.5);
             --danger: #ff0066;
             --success: #00ff88;
             --warning: #ffaa00;
@@ -35,48 +36,12 @@
             color: var(--text-primary);
             overflow-x: hidden;
             line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 128, 255, 0.1) 0%, transparent 50%);
         }
 
-        /* Loading Overlay */
-        .global-loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .global-loader.active {
-            display: flex;
-        }
-
-        .global-loader-text {
-            font-family: 'Press Start 2P', cursive;
-            color: var(--accent-pink);
-            font-size: 1rem;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--border-color);
-            border-top-color: var(--accent-pink);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Resto dos estilos anteriores... */
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -84,10 +49,11 @@
             background: var(--bg-secondary);
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-pink);
+            background: linear-gradient(180deg, var(--accent-pink), var(--accent-blue));
             border-radius: 5px;
         }
 
+        /* Glitch Effect */
         .glitch {
             position: relative;
             animation: glitch-skew 1s infinite linear alternate-reverse;
@@ -143,31 +109,34 @@
             100% { transform: skew(0deg); }
         }
 
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
             padding: 20px 50px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(10, 10, 15, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 2px solid var(--accent-pink);
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 20px var(--shadow);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.2);
         }
 
         .logo {
             font-family: 'Press Start 2P', cursive;
             font-size: 1.5rem;
-            color: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-decoration: none;
             transition: all 0.3s;
         }
 
         .logo:hover {
-            text-shadow: 0 0 20px var(--accent-pink-light);
+            filter: drop-shadow(0 0 10px var(--accent-pink));
             transform: scale(1.05);
         }
 
@@ -178,7 +147,7 @@
         }
 
         .admin-badge {
-            background: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
             color: white;
             padding: 5px 15px;
             border-radius: 20px;
@@ -208,21 +177,24 @@
             transition: all 0.3s;
             text-transform: uppercase;
             font-size: 0.85rem;
+            border-radius: 25px;
         }
 
         .nav-btn:hover {
-            background: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
             color: white;
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
         }
 
+        /* Hero Section */
         .hero {
             margin-top: 80px;
-            padding: 100px 50px;
+            padding: 120px 50px;
             text-align: center;
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
         }
 
         .hero::before {
@@ -232,27 +204,31 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255, 0, 255, 0.03) 10px,
-                rgba(255, 0, 255, 0.03) 20px
-            );
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 255, 0.03) 2px, rgba(0, 255, 255, 0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 0, 255, 0.03) 2px, rgba(255, 0, 255, 0.03) 4px);
             pointer-events: none;
+            animation: scan 10s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(10px); }
         }
 
         .hero h1 {
             font-family: 'Press Start 2P', cursive;
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
-            color: var(--text-primary);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             position: relative;
             z-index: 1;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto;
@@ -260,6 +236,7 @@
             z-index: 1;
         }
 
+        /* Filter Controls */
         .controls {
             padding: 30px 50px;
             background: var(--bg-secondary);
@@ -267,7 +244,7 @@
             position: sticky;
             top: 80px;
             z-index: 100;
-            box-shadow: 0 2px 10px var(--shadow);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
         .filter-container {
@@ -290,7 +267,7 @@
             background: transparent;
             border: 2px solid var(--border-color);
             color: var(--text-secondary);
-            padding: 10px 25px;
+            padding: 12px 25px;
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 600;
             text-transform: uppercase;
@@ -298,13 +275,15 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 0.85rem;
+            border-radius: 25px;
         }
 
         .filter-btn:hover,
         .filter-btn.active {
             border-color: var(--accent-pink);
             color: var(--accent-pink);
-            background: rgba(255, 0, 255, 0.05);
+            background: rgba(255, 0, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
         }
 
         .search-box {
@@ -312,7 +291,7 @@
         }
 
         .search-box input {
-            background: var(--bg-primary);
+            background: var(--bg-card);
             border: 2px solid var(--border-color);
             color: var(--text-primary);
             padding: 12px 20px;
@@ -321,11 +300,12 @@
             width: 300px;
             outline: none;
             transition: all 0.3s;
+            border-radius: 25px;
         }
 
         .search-box input:focus {
             border-color: var(--accent-pink);
-            box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.2);
         }
 
         .search-box::after {
@@ -338,6 +318,7 @@
             font-size: 1.2rem;
         }
 
+        /* Gallery Grid */
         .gallery {
             padding: 50px;
             max-width: 1400px;
@@ -353,16 +334,16 @@
 
         .gallery-item {
             position: relative;
-            background: var(--bg-secondary);
+            background: var(--bg-card);
             border: 2px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.6s forwards;
-            box-shadow: 0 4px 6px var(--shadow);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         @keyframes fadeInUp {
@@ -373,9 +354,9 @@
         }
 
         .gallery-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
             border-color: var(--accent-pink);
-            box-shadow: 0 20px 40px rgba(255, 0, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(255, 0, 255, 0.2);
         }
 
         .gallery-item.hidden {
@@ -387,7 +368,7 @@
             height: 300px;
             object-fit: cover;
             display: block;
-            background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
         }
 
         .item-file-icon {
@@ -397,7 +378,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%);
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
             font-size: 4rem;
             color: var(--accent-pink);
         }
@@ -415,7 +396,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(255,255,255,0.98), transparent);
+            background: linear-gradient(to top, rgba(10,10,15,0.98), transparent);
             padding: 30px;
             transform: translateY(20px);
             opacity: 0;
@@ -441,50 +422,51 @@
         }
 
         .admin-btn {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 1.1rem;
             transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .edit-btn {
-            background: var(--accent-cyan);
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
             color: white;
         }
 
         .delete-btn {
-            background: var(--danger);
+            background: linear-gradient(135deg, var(--danger), #ff4080);
             color: white;
         }
 
         .admin-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px currentColor;
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 0 20px currentColor;
         }
 
         .item-category {
             display: inline-block;
-            background: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
             color: white;
-            padding: 5px 15px;
+            padding: 6px 16px;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 10px;
             border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.3);
         }
 
         .item-title {
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-bottom: 10px;
             color: var(--text-primary);
             line-height: 1.4;
@@ -510,13 +492,18 @@
             gap: 5px;
             cursor: pointer;
             transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.05);
         }
 
         .stat:hover {
             color: var(--accent-pink);
+            background: rgba(255, 0, 255, 0.2);
             transform: scale(1.1);
         }
 
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -524,7 +511,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(10, 10, 15, 0.98);
             z-index: 2000;
             overflow-y: auto;
             backdrop-filter: blur(10px);
@@ -544,13 +531,13 @@
         }
 
         .modal-content {
-            background: var(--bg-secondary);
-            border: 3px solid var(--accent-pink);
+            background: var(--bg-card);
+            border: 2px solid var(--accent-pink);
             border-radius: 20px;
             max-width: 1000px;
             width: 100%;
             position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            box-shadow: 0 0 60px rgba(255, 0, 255, 0.3);
             overflow: hidden;
         }
 
@@ -558,11 +545,11 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: var(--accent-pink);
+            background: linear-gradient(135deg, var(--accent-pink), var(--danger));
             border: none;
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             font-size: 1.5rem;
             cursor: pointer;
@@ -571,12 +558,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .modal-close:hover {
-            background: var(--danger);
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(1.1);
+            box-shadow: 0 0 20px var(--accent-pink);
         }
 
         .modal-body {
@@ -587,11 +574,12 @@
 
         .modal-media {
             position: relative;
-            background: var(--bg-card);
+            background: var(--bg-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            border-right: 2px solid var(--border-color);
         }
 
         .modal-image {
@@ -608,7 +596,9 @@
         .modal-file-icon {
             font-size: 6rem;
             margin-bottom: 20px;
-            color: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .file-actions {
@@ -616,6 +606,7 @@
             gap: 15px;
             justify-content: center;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .modal-info {
@@ -637,9 +628,16 @@
             gap: 10px;
         }
 
+        .modal-category::before {
+            content: '';
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+        }
+
         .modal-title {
             font-family: 'Press Start 2P', cursive;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-bottom: 20px;
             line-height: 1.6;
             color: var(--text-primary);
@@ -687,25 +685,27 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            border-radius: 8px;
+            border-radius: 25px;
             text-decoration: none;
+            font-size: 0.85rem;
         }
 
         .action-btn:hover {
-            background: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
             color: white;
+            border-color: transparent;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+            box-shadow: 0 10px 20px rgba(255, 0, 255, 0.3);
         }
 
         .action-btn.primary {
-            background: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
             color: white;
+            border-color: transparent;
         }
 
         .action-btn.primary:hover {
-            background: var(--accent-pink-dark);
-            border-color: var(--accent-pink-dark);
+            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.5);
         }
 
         .action-btn.danger {
@@ -714,10 +714,12 @@
         }
 
         .action-btn.danger:hover {
-            background: var(--danger);
+            background: linear-gradient(45deg, var(--danger), #ff4080);
             color: white;
+            border-color: transparent;
         }
 
+        /* Upload Panel */
         .upload-section {
             position: fixed;
             bottom: 30px;
@@ -726,38 +728,45 @@
         }
 
         .upload-btn {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
             border: none;
             color: white;
-            font-size: 2rem;
+            font-size: 2.5rem;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 0, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.4);
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .upload-btn:hover {
             transform: scale(1.1) rotate(90deg);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.6);
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.6);
+            animation: none;
         }
 
         .upload-panel {
             position: absolute;
-            bottom: 80px;
+            bottom: 90px;
             right: 0;
-            width: 400px;
-            max-height: 80vh;
+            width: 420px;
+            max-height: 85vh;
             overflow-y: auto;
-            background: var(--bg-secondary);
-            border: 3px solid var(--accent-pink);
+            background: var(--bg-card);
+            border: 2px solid var(--accent-pink);
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             display: none;
         }
 
@@ -775,7 +784,9 @@
             font-family: 'Press Start 2P', cursive;
             font-size: 0.9rem;
             margin-bottom: 25px;
-            color: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             text-align: center;
         }
 
@@ -786,8 +797,8 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
+            color: var(--accent-pink);
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -797,21 +808,21 @@
         .form-group select,
         .form-group textarea {
             width: 100%;
-            background: var(--bg-primary);
+            background: var(--bg-secondary);
             border: 2px solid var(--border-color);
             color: var(--text-primary);
             padding: 12px;
             font-family: 'Space Grotesk', sans-serif;
             outline: none;
             transition: all 0.3s;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             border-color: var(--accent-pink);
-            box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.2);
         }
 
         .form-group textarea {
@@ -833,10 +844,10 @@
 
         .file-input-label {
             display: block;
-            padding: 15px;
-            background: var(--bg-card);
+            padding: 20px;
+            background: var(--bg-secondary);
             border: 2px dashed var(--accent-pink);
-            border-radius: 8px;
+            border-radius: 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
@@ -844,23 +855,25 @@
         }
 
         .file-input-label:hover {
-            background: rgba(255, 0, 255, 0.05);
-            border-color: var(--accent-pink-dark);
+            background: rgba(255, 0, 255, 0.1);
+            border-color: var(--accent-cyan);
         }
 
         .file-input-label.has-file {
             background: rgba(0, 255, 136, 0.1);
             border-color: var(--success);
-            color: var(--text-primary);
+            border-style: solid;
+            color: var(--success);
         }
 
         .file-preview {
             margin-top: 10px;
             padding: 10px;
-            background: var(--bg-primary);
-            border-radius: 8px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
             font-size: 0.9rem;
             display: none;
+            border: 1px solid var(--border-color);
         }
 
         .file-preview.active {
@@ -869,23 +882,23 @@
 
         .submit-btn {
             width: 100%;
-            background: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
             border: none;
             color: white;
             padding: 15px;
             font-family: 'Press Start 2P', cursive;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.3s;
             margin-top: 10px;
-            border-radius: 8px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.3);
         }
 
         .submit-btn:hover {
-            background: var(--accent-pink-dark);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.5);
         }
 
         .submit-btn:disabled {
@@ -894,6 +907,7 @@
             transform: none;
         }
 
+        /* Login Modal */
         .login-modal {
             display: none;
             position: fixed;
@@ -901,7 +915,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             z-index: 3000;
             justify-content: center;
             align-items: center;
@@ -912,55 +926,62 @@
         }
 
         .login-box {
-            background: var(--bg-secondary);
+            background: var(--bg-card);
             padding: 40px;
             border-radius: 20px;
-            border: 3px solid var(--accent-pink);
+            border: 2px solid var(--accent-pink);
             width: 90%;
             max-width: 400px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 0 60px rgba(255, 0, 255, 0.3);
         }
 
         .login-box h2 {
             font-family: 'Press Start 2P', cursive;
-            color: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 30px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .login-input {
             width: 100%;
             padding: 15px;
             margin-bottom: 20px;
+            background: var(--bg-secondary);
             border: 2px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
+            color: var(--text-primary);
             font-family: 'Space Grotesk', sans-serif;
-            font-size: 1rem;
+            font-size: 1.2rem;
             text-align: center;
-            letter-spacing: 5px;
+            letter-spacing: 8px;
         }
 
         .login-input:focus {
             outline: none;
             border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(255, 0, 255, 0.2);
         }
 
         .login-btn {
             width: 100%;
             padding: 15px;
-            background: var(--accent-pink);
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-family: 'Press Start 2P', cursive;
             font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.3);
         }
 
         .login-btn:hover {
-            background: var(--accent-pink-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 255, 0.5);
         }
 
         .login-error {
@@ -970,19 +991,21 @@
             display: none;
         }
 
+        /* Notifications */
         .notification {
             position: fixed;
             top: 100px;
             right: 30px;
-            background: var(--bg-secondary);
+            background: var(--bg-card);
             border-left: 4px solid var(--accent-pink);
             padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             z-index: 4000;
             transform: translateX(400px);
             transition: transform 0.3s;
             max-width: 350px;
+            border: 1px solid var(--border-color);
         }
 
         .notification.show {
@@ -1008,6 +1031,7 @@
             font-size: 0.9rem;
         }
 
+        /* Confirm Dialog */
         .confirm-dialog {
             display: none;
             position: fixed;
@@ -1015,7 +1039,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             z-index: 3500;
             justify-content: center;
             align-items: center;
@@ -1026,13 +1050,14 @@
         }
 
         .confirm-box {
-            background: var(--bg-secondary);
+            background: var(--bg-card);
             padding: 30px;
-            border-radius: 15px;
-            border: 3px solid var(--danger);
+            border-radius: 20px;
+            border: 2px solid var(--danger);
             max-width: 400px;
             text-align: center;
             animation: shake 0.5s;
+            box-shadow: 0 0 60px rgba(255, 0, 102, 0.3);
         }
 
         @keyframes shake {
@@ -1045,7 +1070,7 @@
             color: var(--danger);
             margin-bottom: 15px;
             font-family: 'Press Start 2P', cursive;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .confirm-buttons {
@@ -1054,6 +1079,7 @@
             margin-top: 25px;
         }
 
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 80px 20px;
@@ -1066,39 +1092,84 @@
             opacity: 0.5;
         }
 
+        /* Sync Status */
         .sync-status {
             position: fixed;
-            bottom: 100px;
+            bottom: 110px;
             right: 30px;
-            background: var(--bg-secondary);
-            padding: 10px 20px;
-            border-radius: 20px;
+            background: var(--bg-card);
+            padding: 12px 20px;
+            border-radius: 25px;
             border: 2px solid var(--accent-pink);
             font-size: 0.85rem;
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             z-index: 998;
         }
 
-        .sync-status.syncing::before {
-            content: '';
-            width: 12px;
-            height: 12px;
-            border: 2px solid var(--border-color);
+        .sync-status.error {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* Global Loader */
+        .global-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 15, 0.98);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .global-loader.active {
+            display: flex;
+        }
+
+        .global-loader-text {
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1rem;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border-color);
             border-top-color: var(--accent-pink);
             border-radius: 50%;
             animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
         }
 
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
         @media (max-width: 968px) {
             .modal-body {
                 grid-template-columns: 1fr;
             }
             
+            .modal-media {
+                border-right: none;
+                border-bottom: 2px solid var(--border-color);
+                min-height: 300px;
+            }
+            
             .hero h1 {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             
             .gallery-grid {
@@ -1107,7 +1178,7 @@
             
             .upload-panel {
                 width: 90vw;
-                right: -30px;
+                right: -20px;
             }
         }
 
@@ -1132,6 +1203,33 @@
                 flex-direction: column;
                 align-items: stretch;
             }
+            
+            .hero {
+                padding: 80px 20px;
+            }
+        }
+
+        /* Loading bar for upload */
+        .upload-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--border-color);
+            border-radius: 2px;
+            margin-top: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .upload-progress.active {
+            display: block;
+        }
+
+        .upload-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-cyan));
+            width: 0%;
+            transition: width 0.3s;
+            box-shadow: 0 0 10px var(--accent-pink);
         }
     </style>
 </head>
@@ -1139,7 +1237,7 @@
     <!-- Global Loader -->
     <div class="global-loader" id="globalLoader">
         <div class="spinner"></div>
-        <div class="global-loader-text">A SINCRONIZAR...</div>
+        <div class="global-loader-text">A CARREGAR...</div>
     </div>
 
     <!-- Navigation -->
@@ -1176,9 +1274,7 @@
 
     <!-- Gallery Grid -->
     <section class="gallery" id="galeria">
-        <div class="gallery-grid" id="galleryGrid">
-            <!-- Items injected by JS -->
-        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
         <div class="empty-state" id="emptyState" style="display:none;">
             <div class="empty-state-icon">📭</div>
             <h3>Nenhum projeto encontrado</h3>
@@ -1187,7 +1283,7 @@
     </section>
 
     <!-- Sync Status -->
-    <div class="sync-status" id="syncStatus" style="display:none;">
+    <div class="sync-status" id="syncStatus">
         <span>🟢 Online</span>
     </div>
 
@@ -1210,7 +1306,7 @@
         </div>
     </div>
 
-    <!-- Upload Panel (Agora disponível para TODOS) -->
+    <!-- Upload Panel -->
     <div class="upload-section" id="uploadSection">
         <div class="upload-panel" id="uploadPanel">
             <h3>📤 PARTILHAR PROJETO</h3>
@@ -1242,10 +1338,13 @@
                         <input type="file" id="newFile" accept="image/*,.pdf,.doc,.docx,.txt,.epub" required onchange="handleFileSelect(this)">
                         <label for="newFile" class="file-input-label" id="fileLabel">
                             📁 Clique para selecionar ficheiro<br>
-                            <small>Imagens, PDF, Word, TXT (Max 5MB)</small>
+                            <small>Imagens, PDF, Word, TXT (Max 100KB para cloud)</small>
                         </label>
                     </div>
                     <div class="file-preview" id="filePreview"></div>
+                    <div class="upload-progress" id="uploadProgress">
+                        <div class="upload-progress-bar" id="progressBar"></div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -1258,17 +1357,17 @@
                     <input type="url" id="newExternalLink" placeholder="Portfolio, redes sociais...">
                 </div>
 
-                <button type="submit" class="submit-btn">PUBLICAR PARA TODOS</button>
+                <button type="submit" class="submit-btn" id="submitBtn">PUBLICAR PARA TODOS</button>
             </form>
         </div>
         <button class="upload-btn" onclick="toggleUpload()" title="Partilhar Projeto">+</button>
     </div>
 
-    <!-- Login Modal (Apenas para Admin - Editar/Eliminar) -->
+    <!-- Login Modal -->
     <div class="login-modal" id="loginModal">
         <div class="login-box">
             <h2>🔐 ADMIN ONLY</h2>
-            <p style="margin-bottom:20px;color:#666;font-size:0.9rem;">
+            <p style="margin-bottom:20px;color:var(--text-secondary);font-size:0.9rem;">
                 Login apenas necessário para editar ou eliminar conteúdo.
             </p>
             <input type="password" class="login-input" id="adminPassword" placeholder="••••••" maxlength="6">
@@ -1296,113 +1395,57 @@
     </div>
 
     <script>
-        // CONFIGURAÇÃO JSONBIN.IO - CRIA A TUA CONTA GRATUITA EM jsonbin.io
-        // 1. Vai a https://jsonbin.io
-        // 2. Cria uma conta gratuita
-        // 3. Cria um novo Bin
-        // 4. Copia o URL do bin e a chave API
-        // 5. Substitui abaixo:
-        
+        // CONFIGURAÇÃO - MANTÉM AS TUAS CREDENCIAIS
         const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/69a97aafd0ea881f40f19446';
         const JSONBIN_KEY = '$2a$10$WiQ2cNYCmz4lr43shFzswuw8gGuCDG2KDkvuKDUVf7RV9M4L1nSxO';
-        
-        // MODO DEMONSTRAÇÃO (sem backend):
-        // Se não configurares o JSONBin, usa o modo demo onde os dados ficam em memória
-        // mas são partilhados entre todos os utilizadores durante a sessão do servidor
-        // (nota: em GitHub Pages puro, usa o localStorage com sincronização manual)
-        
         const ADMIN_PASSWORD = '159753';
+        
         let isAdmin = false;
         let itemToDelete = null;
         let portfolioItems = [];
-        let isDemoMode = false; // Muda para false quando configurares JSONBin
-
-        // Dados iniciais
-        const initialData = [
-            {
-                id: 1,
-                title: "Entre o Pixels e a Realidade",
-                author: "RoisaPink",
-                category: "livro",
-                fileType: "image",
-                fileName: "cover.jpg",
-                fileData: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=800&q=80",
-                image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=800&q=80",
-                description: "Uma novela cyberpunk que explora a identidade de género num futuro distópico.",
-                date: "2024-01-15",
-                likes: 128,
-                externalLink: null
-            },
-            {
-                id: 2,
-                title: "Glitch Princess",
-                author: "Comunidade",
-                category: "arte",
-                fileType: "image",
-                fileName: "glitch.jpg",
-                fileData: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
-                image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
-                description: "Série de ilustrações explorando a estética glitch e feminilidade digital.",
-                date: "2024-02-20",
-                likes: 95,
-                externalLink: null
-            }
-        ];
+        let selectedFile = null;
+        let isUploading = false;
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', async () => {
             showGlobalLoader('A CARREGAR GALERIA...');
-            
-            // Tentar carregar do JSONBin se configurado
-            if (!isDemoMode) {
-                await loadFromCloud();
-            } else {
-                const saved = localStorage.getItem('roisapink_gallery_demo');
-                portfolioItems = saved ? JSON.parse(saved) : [...initialData];
-            }
-            
+            await loadFromCloud();
             renderGallery();
             hideGlobalLoader();
             
-            // Verificar sessão admin
             if (sessionStorage.getItem('roisapink_admin') === 'true') {
                 activateAdminMode();
             }
-
-            // Atualizar status
-            updateSyncStatus();
         });
 
-        // FUNÇÕES JSONBIN.IO (Cloud)
+        // CARREGAR DA CLOUD
         async function loadFromCloud() {
             try {
                 const response = await fetch(JSONBIN_URL + '/latest', {
-                    headers: { 'X-Master-Key': JSONBIN_KEY }
+                    headers: { 
+                        'X-Master-Key': JSONBIN_KEY,
+                        'X-Bin-Meta': 'false'
+                    }
                 });
+                
                 if (response.ok) {
                     const data = await response.json();
-                    portfolioItems = data.record.items || initialData;
-                    isDemoMode = false;
+                    portfolioItems = data.record?.items || [];
+                    updateSyncStatus(true);
                 } else {
                     throw new Error('Falha ao carregar');
                 }
             } catch (error) {
-                console.log('Modo Demo ativado (sem conexão cloud)');
-                portfolioItems = [...initialData];
-                isDemoMode = true;
+                console.error('Erro:', error);
+                portfolioItems = [];
+                updateSyncStatus(false, 'Erro de conexão');
+                showNotification('Erro', 'Não foi possível carregar dados. Tenta recarregar.', 'error');
             }
         }
 
+        // GUARDAR NA CLOUD
         async function saveToCloud() {
-            if (isDemoMode) {
-                // Em modo demo, guarda no localStorage e mostra aviso
-                localStorage.setItem('roisapink_gallery_demo', JSON.stringify(portfolioItems));
-                showNotification('Modo Demo', 'Dados guardados localmente. Configura JSONBin para partilha real!', 'success');
-                return true;
-            }
-
             try {
-                showGlobalLoader('A GUARDAR...');
                 const response = await fetch(JSONBIN_URL, {
                     method: 'PUT',
                     headers: {
@@ -1411,16 +1454,35 @@
                     },
                     body: JSON.stringify({ items: portfolioItems })
                 });
-                hideGlobalLoader();
-                return response.ok;
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Erro ao guardar');
+                }
+                
+                updateSyncStatus(true);
+                return true;
             } catch (error) {
-                hideGlobalLoader();
-                showNotification('Erro', 'Não foi possível sincronizar com a cloud.', 'error');
+                console.error('Erro ao guardar:', error);
+                updateSyncStatus(false, 'Erro ao sincronizar');
+                showNotification('Erro', 'Falha ao guardar: ' + error.message, 'error');
                 return false;
             }
         }
 
-        // Sistema de Login Admin
+        // ATUALIZAR STATUS
+        function updateSyncStatus(online, message) {
+            const status = document.getElementById('syncStatus');
+            if (online) {
+                status.innerHTML = '<span>🟢 Online</span>';
+                status.classList.remove('error');
+            } else {
+                status.innerHTML = `<span>🔴 ${message || 'Offline'}</span>`;
+                status.classList.add('error');
+            }
+        }
+
+        // SISTEMA DE LOGIN
         function showLogin() {
             document.getElementById('loginModal').classList.add('active');
             document.getElementById('adminPassword').value = '';
@@ -1433,7 +1495,7 @@
                 sessionStorage.setItem('roisapink_admin', 'true');
                 activateAdminMode();
                 closeLogin();
-                showNotification('Admin', 'Modo administrador activado. Podes editar e eliminar.', 'success');
+                showNotification('Sucesso', 'Modo administrador activado!', 'success');
             } else {
                 document.getElementById('loginError').style.display = 'block';
                 setTimeout(() => document.getElementById('loginError').style.display = 'none', 3000);
@@ -1463,7 +1525,7 @@
             document.getElementById('loginModal').classList.remove('active');
         }
 
-        // Render Gallery
+        // RENDER GALLERY
         function renderGallery() {
             const grid = document.getElementById('galleryGrid');
             const emptyState = document.getElementById('emptyState');
@@ -1472,11 +1534,9 @@
             if (portfolioItems.length === 0) {
                 emptyState.style.display = 'block';
                 return;
-            } else {
-                emptyState.style.display = 'none';
             }
-
-            // Ordenar por data (mais recente primeiro)
+            
+            emptyState.style.display = 'none';
             const sortedItems = [...portfolioItems].sort((a, b) => new Date(b.date) - new Date(a.date));
 
             sortedItems.forEach((item, index) => {
@@ -1493,14 +1553,14 @@
             div.style.animationDelay = `${index * 0.1}s`;
 
             let mediaContent = '';
-            if (item.fileType === 'image') {
+            if (item.fileType === 'image' && item.image) {
                 mediaContent = `<img src="${item.image}" alt="${item.title}" class="item-image" loading="lazy">`;
             } else {
                 const icon = getFileIcon(item.fileType);
                 mediaContent = `
                     <div class="item-file-icon">
                         ${icon}
-                        <span class="file-type-label">${item.fileType.toUpperCase()}</span>
+                        <span class="file-type-label">${item.fileType?.toUpperCase() || 'FILE'}</span>
                     </div>
                 `;
             }
@@ -1514,12 +1574,12 @@
                 <div class="item-overlay">
                     <span class="item-category">${item.category}</span>
                     <h3 class="item-title">${item.title}</h3>
-                    <p style="font-size:0.85rem;color:#666;margin-bottom:8px;">por ${item.author}</p>
+                    <p style="font-size:0.85rem;color:#a0a0b0;margin-bottom:8px;">por ${item.author}</p>
                     <div class="item-meta">
                         <span>${formatDate(item.date)}</span>
                         <div class="item-stats">
                             <span class="stat" onclick="toggleLike(event, ${item.id})">
-                                ${item.liked ? '♥' : '♡'} ${item.likes}
+                                ${item.liked ? '♥' : '♡'} ${item.likes || 0}
                             </span>
                         </div>
                     </div>
@@ -1538,33 +1598,30 @@
         function getFileIcon(type) {
             const icons = {
                 'pdf': '📄', 'doc': '📝', 'docx': '📝', 'txt': '📃',
-                'epub': '📚', 'mobi': '📚', 'default': '📎'
+                'epub': '📚', 'mobi': '📚', 'image': '🖼️', 'default': '📎'
             };
             return icons[type] || icons['default'];
         }
 
         function formatDate(dateString) {
+            if (!dateString) return 'Data desconhecida';
             const date = new Date(dateString);
             return date.toLocaleDateString('pt-PT', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
-        // Modal Functions
+        // MODAL
         function openModal(item) {
             const modal = document.getElementById('modal');
             const mediaContainer = document.getElementById('modalMedia');
             
-            if (item.fileType === 'image') {
+            if (item.fileType === 'image' && item.image) {
                 mediaContainer.innerHTML = `<img src="${item.image}" alt="${item.title}" class="modal-image">`;
             } else {
                 mediaContainer.innerHTML = `
                     <div class="modal-file-preview">
                         <div class="modal-file-icon">${getFileIcon(item.fileType)}</div>
-                        <h3>${item.fileName}</h3>
-                        <div class="file-actions">
-                            <a href="${item.fileData}" class="action-btn primary" download="${item.fileName}">
-                                ⬇️ Download
-                            </a>
-                        </div>
+                        <h3>${item.fileName || 'Ficheiro'}</h3>
+                        <p style="color:var(--text-secondary);margin-top:10px;">${item.fileType?.toUpperCase() || 'FICHEIRO'}</p>
                     </div>
                 `;
             }
@@ -1573,7 +1630,7 @@
             document.getElementById('modalTitle').textContent = item.title;
             document.getElementById('modalDescription').innerHTML = `
                 <p><strong>Autor:</strong> ${item.author}</p>
-                <p style="margin-top:10px;">${item.description}</p>
+                <p style="margin-top:15px;">${item.description}</p>
             `;
             document.getElementById('modalDate').textContent = formatDate(item.date);
 
@@ -1581,7 +1638,7 @@
             let buttonsHTML = `
                 <button class="action-btn" onclick="toggleLike(null, ${item.id}); updateModalLike(${item.id})">
                     <span id="modalLikeIcon">${item.liked ? '♥' : '♡'}</span> 
-                    <span id="modalLikeCount">${item.likes}</span>
+                    <span id="modalLikeCount">${item.likes || 0}</span>
                 </button>
             `;
             
@@ -1605,7 +1662,7 @@
             const item = portfolioItems.find(i => i.id === id);
             if (item) {
                 document.getElementById('modalLikeIcon').textContent = item.liked ? '♥' : '♡';
-                document.getElementById('modalLikeCount').textContent = item.likes;
+                document.getElementById('modalLikeCount').textContent = item.likes || 0;
             }
         }
 
@@ -1614,67 +1671,60 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Like System (local por utilizador)
+        // LIKE SYSTEM
         function toggleLike(event, id) {
             if (event) event.stopPropagation();
             
-            // Verificar se já deu like neste dispositivo
             const likedItems = JSON.parse(localStorage.getItem('roisapink_likes') || '[]');
             const item = portfolioItems.find(i => i.id === id);
             
             if (!item) return;
 
             if (likedItems.includes(id)) {
-                // Remover like
-                item.likes--;
+                item.likes = (item.likes || 0) - 1;
                 const index = likedItems.indexOf(id);
                 likedItems.splice(index, 1);
                 item.liked = false;
             } else {
-                // Adicionar like
-                item.likes++;
+                item.likes = (item.likes || 0) + 1;
                 likedItems.push(id);
                 item.liked = true;
             }
             
             localStorage.setItem('roisapink_likes', JSON.stringify(likedItems));
-            
-            // Guardar na cloud (apenas likes são locais, mas atualizamos contagem global)
             saveToCloud();
             renderGallery();
         }
 
-        // Upload Handling
-        let selectedFile = null;
-
+        // FILE HANDLING
         function handleFileSelect(input) {
             const file = input.files[0];
             const label = document.getElementById('fileLabel');
             const preview = document.getElementById('filePreview');
             
-            if (file) {
-                // Verificar tamanho (5MB max)
-                if (file.size > 5 * 1024 * 1024) {
-                    showNotification('Erro', 'Ficheiro muito grande! Máximo 5MB.', 'error');
-                    input.value = '';
-                    return;
-                }
+            if (!file) return;
 
-                selectedFile = file;
-                label.classList.add('has-file');
-                label.innerHTML = `✅ ${file.name}<br><small>${formatFileSize(file.size)}</small>`;
-                
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        preview.innerHTML = `<img src="${e.target.result}" style="max-width:100%;border-radius:8px;">`;
-                        preview.classList.add('active');
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    preview.innerHTML = `📎 ${file.name}`;
+            // Verificar tamanho (100KB max para JSONBin gratuito)
+            if (file.size > 100 * 1024) {
+                showNotification('Aviso', 'Ficheiro muito grande! Máximo 100KB para cloud gratuita. Usa links externos para ficheiros maiores.', 'error');
+                input.value = '';
+                return;
+            }
+
+            selectedFile = file;
+            label.classList.add('has-file');
+            label.innerHTML = `✅ ${file.name}<br><small>${formatFileSize(file.size)}</small>`;
+            
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    preview.innerHTML = `<img src="${e.target.result}" style="max-width:100%;border-radius:8px;">`;
                     preview.classList.add('active');
-                }
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = `📎 ${file.name} (${file.type || 'ficheiro'})`;
+                preview.classList.add('active');
             }
         }
 
@@ -1686,13 +1736,21 @@
             return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
         }
 
-        // Upload Form - AGORA PARA TODOS
+        // UPLOAD FORM
         document.getElementById('uploadForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const submitBtn = e.target.querySelector('.submit-btn');
+            if (isUploading) return;
+            isUploading = true;
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const progressBar = document.getElementById('progressBar');
+            const uploadProgress = document.getElementById('uploadProgress');
+            
             submitBtn.disabled = true;
-            submitBtn.textContent = 'A PUBLICAR...';
+            submitBtn.textContent = 'A PROCESSAR...';
+            uploadProgress.classList.add('active');
+            progressBar.style.width = '30%';
 
             const author = document.getElementById('authorName').value;
             const title = document.getElementById('newTitle').value;
@@ -1705,24 +1763,27 @@
             let fileType = 'link';
             
             if (selectedFile) {
-                fileType = selectedFile.name.split('.').pop().toLowerCase();
+                fileType = selectedFile.type.startsWith('image/') ? 'image' : selectedFile.name.split('.').pop().toLowerCase();
+                
+                progressBar.style.width = '60%';
                 
                 if (selectedFile.type.startsWith('image/')) {
                     fileData = await readFileAsDataURL(selectedFile);
                     imageUrl = fileData;
                 } else {
-                    // Para não-imagens, guardamos o nome e usamos placeholder
-                    fileData = selectedFile.name; // Em produção, enviarias para um servidor de ficheiros
+                    fileData = await readFileAsDataURL(selectedFile);
                     imageUrl = getPlaceholderImage(category);
                 }
             }
+
+            progressBar.style.width = '80%';
 
             const newItem = {
                 id: Date.now(),
                 title,
                 author,
                 category,
-                fileType: selectedFile?.type.startsWith('image/') ? 'image' : fileType,
+                fileType,
                 fileName: selectedFile ? selectedFile.name : 'link',
                 fileData: fileData,
                 image: imageUrl || getPlaceholderImage(category),
@@ -1733,23 +1794,53 @@
                 externalLink: externalLink || null
             };
 
-            portfolioItems.unshift(newItem);
+            // Se estiver em modo edição
+            const editId = document.getElementById('uploadForm').dataset.editId;
+            if (editId) {
+                const index = portfolioItems.findIndex(i => i.id == editId);
+                if (index !== -1) {
+                    newItem.id = parseInt(editId);
+                    newItem.likes = portfolioItems[index].likes;
+                    portfolioItems[index] = newItem;
+                }
+                delete document.getElementById('uploadForm').dataset.editId;
+            } else {
+                portfolioItems.unshift(newItem);
+            }
+
+            progressBar.style.width = '90%';
+            
             const saved = await saveToCloud();
+            
+            progressBar.style.width = '100%';
             
             if (saved) {
                 renderGallery();
-                e.target.reset();
-                document.getElementById('fileLabel').classList.remove('has-file');
-                document.getElementById('fileLabel').innerHTML = `📁 Clique para selecionar ficheiro<br><small>Imagens, PDF, Word, TXT (Max 5MB)</small>`;
-                document.getElementById('filePreview').classList.remove('active');
-                selectedFile = null;
+                resetForm();
                 document.getElementById('uploadPanel').classList.remove('active');
-                showNotification('🎉 Sucesso!', 'O teu projeto foi partilhado com todos!', 'success');
+                showNotification('🎉 Sucesso!', editId ? 'Projeto actualizado!' : 'Projeto publicado para todos!', 'success');
             }
+            
+            setTimeout(() => {
+                uploadProgress.classList.remove('active');
+                progressBar.style.width = '0%';
+            }, 500);
             
             submitBtn.disabled = false;
             submitBtn.textContent = 'PUBLICAR PARA TODOS';
+            isUploading = false;
         });
+
+        function resetForm() {
+            document.getElementById('uploadForm').reset();
+            document.getElementById('fileLabel').classList.remove('has-file');
+            document.getElementById('fileLabel').innerHTML = `📁 Clique para selecionar ficheiro<br><small>Imagens, PDF, Word, TXT (Max 100KB)</small>`;
+            document.getElementById('filePreview').classList.remove('active');
+            document.getElementById('filePreview').innerHTML = '';
+            selectedFile = null;
+            delete document.getElementById('uploadForm').dataset.editId;
+            document.querySelector('.submit-btn').textContent = 'PUBLICAR PARA TODOS';
+        }
 
         function readFileAsDataURL(file) {
             return new Promise((resolve) => {
@@ -1769,11 +1860,11 @@
             return placeholders[category] || placeholders['arte'];
         }
 
-        // Delete (Apenas Admin)
+        // DELETE
         function deleteItem(id, event) {
             if (event) event.stopPropagation();
             if (!isAdmin) {
-                showNotification('Acesso Negado', 'Apenas administradores podem eliminar conteúdo.', 'error');
+                showNotification('Acesso Negado', 'Apenas administradores podem eliminar.', 'error');
                 return;
             }
             itemToDelete = id;
@@ -1795,7 +1886,7 @@
             closeConfirm();
         }
 
-        // Edit (Apenas Admin)
+        // EDIT
         function editItem(id, event) {
             if (event) event.stopPropagation();
             if (!isAdmin) {
@@ -1816,7 +1907,7 @@
             }
         }
 
-        // Filters & Search
+        // FILTERS
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -1839,6 +1930,7 @@
             });
         });
 
+        // SEARCH
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const items = document.querySelectorAll('.gallery-item');
@@ -1859,14 +1951,18 @@
             document.getElementById('emptyState').style.display = visibleCount === 0 ? 'block' : 'none';
         });
 
+        // TOGGLE UPLOAD
         function toggleUpload() {
             const panel = document.getElementById('uploadPanel');
-            panel.classList.toggle('active');
-            delete document.getElementById('uploadForm').dataset.editId;
-            document.querySelector('.submit-btn').textContent = 'PUBLICAR PARA TODOS';
+            if (panel.classList.contains('active')) {
+                panel.classList.remove('active');
+                resetForm();
+            } else {
+                panel.classList.add('active');
+            }
         }
 
-        // UI Helpers
+        // UI HELPERS
         function showGlobalLoader(text) {
             document.getElementById('globalLoader').classList.add('active');
             if (text) document.querySelector('.global-loader-text').textContent = text;
@@ -1874,17 +1970,6 @@
 
         function hideGlobalLoader() {
             document.getElementById('globalLoader').classList.remove('active');
-        }
-
-        function updateSyncStatus() {
-            const status = document.getElementById('syncStatus');
-            if (isDemoMode) {
-                status.innerHTML = '<span>🟡 Modo Demo (Local)</span>';
-                status.style.display = 'flex';
-            } else {
-                status.innerHTML = '<span>🟢 Cloud Ativo</span>';
-                status.style.display = 'flex';
-            }
         }
 
         function showNotification(title, text, type = 'success') {
@@ -1895,7 +1980,7 @@
             setTimeout(() => notif.classList.remove('show'), 4000);
         }
 
-        // Keyboard shortcuts
+        // KEYBOARD
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeModal();
@@ -1905,7 +1990,7 @@
             }
         });
 
-        // Fechar modais ao clicar fora
+        // CLICK OUTSIDE
         document.getElementById('loginModal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('loginModal')) closeLogin();
         });
@@ -1915,6 +2000,4 @@
         });
     </script>
 </body>
-
 </html>
-
